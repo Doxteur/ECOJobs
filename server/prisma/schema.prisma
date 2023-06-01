@@ -7,15 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
+model JobOffer {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
+  startingDate DateTime
+  name     String   @db.VarChar(255)
+  description   String?
+  experience   String?
   published Boolean  @default(false)
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
+  salary Float
+  contractTypeId  Int
+  contractType    ContractType     @relation(fields: [contractTypeId], references: [id])
+  companyId Int
+  company Company @relation(fields: [companyId], references: [id])
+  skills Skill[]
 }
 
 model Profile {
@@ -25,11 +30,76 @@ model Profile {
   user   User    @relation(fields: [userId], references: [id])
 }
 
+model Industry {
+  id     Int     @id @default(autoincrement())
+  name String  
+  companies  Company[]
+}
+
+model Company {
+  id     Int     @id @default(autoincrement())
+  name String  
+  description String  
+  image String  
+  industries  Industry[]
+  values Value[]
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+  cityId Int
+  city City @relation(fields: [cityId], references: [id])
+  jobOffers JobOffer[]
+}
+
 model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique
   password String
-  name    String?
-  posts   Post[]
+  firstname    String?
+  lastname    String?
   profile Profile?
+  company Company?
+  roleId Int
+  role Role @relation(fields: [roleId], references: [id])
+  skills Skill[]
 }
+
+model ContractType {
+  id     Int     @id @default(autoincrement())
+  name String  
+  jobOffers  JobOffer[]
+}
+
+model City {
+  id     Int     @id @default(autoincrement())
+  name String  
+  departmentId Int
+  department  Department @relation(fields: [departmentId], references: [id])
+  companies Company[]
+}
+
+model Department {
+  id     Int     @id @default(autoincrement())
+  name String  
+  cities  City[]
+}
+
+model Value {
+  id     Int     @id @default(autoincrement())
+  name String  
+  companies  Company[]
+}
+
+model Role {
+  id     Int     @id @default(autoincrement())
+  name String  
+  users  User[]
+}
+
+model Skill {
+  id     Int     @id @default(autoincrement())
+  name String  
+  users  User[]
+  jobOffers  JobOffer[]
+}
+
+
