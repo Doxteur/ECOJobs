@@ -29,6 +29,8 @@
     "draft-js": "^0.11.7",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "react-router": "^6.11.2",
+    "react-router-dom": "^6.11.2",
     "require-stack": "^1.0.2",
     "socket.io": "^4.6.1"
   }

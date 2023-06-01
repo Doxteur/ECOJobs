@@ -8,14 +8,14 @@ import {
 } from "../controllers/JobOffersController.js";
 
 export default router()
-  .get("/job-offers", async (req, res) => {
+  .get("/", async (req, res) => {
     const offers = await getAllJobOffers(req, res);
     res.json(offers);
   })
-  .post("/job-offers", async (req, res) => {
+  .post("/", async (req, res) => {
     const offer = await createJobOffer(req, res);
     res.json(offer);
-  }).delete("/job-offers/:id", async (req, res) => {
+  }).delete("/:id", async (req, res) => {
     const offer = await deleteJobOffer(req, res);
     res.json(offer);
   })

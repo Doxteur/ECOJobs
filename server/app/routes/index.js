@@ -1,7 +1,7 @@
 import { Router as router } from 'express';
 
 // Routes
-import NoteRoutes from './NoteRoutes.js';
+import JobOfferRoute from './JobOfferRoute.js';
 import AuthRoutes from './AuthRoutes.js';
 
 // Middleware
@@ -13,4 +13,6 @@ export default router()
             message: 'Welcome to the API'
         });
     })
-    .use('/auth', AuthRoutes);
+    .use('/auth', AuthRoutes)
+    .use('/job-offer', JobOfferRoute);
+    

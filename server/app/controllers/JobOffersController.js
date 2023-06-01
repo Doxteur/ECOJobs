@@ -1,8 +1,8 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // Get all job offers
-const getAllJobOffers = async (req, res) => {
+export const getAllJobOffers = async (req, res) => {
   try {
     const jobOffers = await prisma.jobOffer.findMany();
     res.json(jobOffers);
@@ -13,7 +13,7 @@ const getAllJobOffers = async (req, res) => {
 };
 
 // Get job offer by ID
-const getJobOfferById = async (req, res) => {
+export const getJobOfferById = async (req, res) => {
   const { id } = req.params;
   try {
     const jobOffer = await prisma.jobOffer.findUnique({ where: { id: Number(id) } });
@@ -29,7 +29,7 @@ const getJobOfferById = async (req, res) => {
 };
 
 // Create a new job offer
-const createJobOffer = async (req, res) => {
+export const createJobOffer = async (req, res) => {
   const { name, description, salary, contractTypeId, companyId } = req.body;
   try {
     const jobOffer = await prisma.jobOffer.create({
@@ -49,7 +49,7 @@ const createJobOffer = async (req, res) => {
 };
 
 // Update a job offer
-const updateJobOffer = async (req, res) => {
+export const updateJobOffer = async (req, res) => {
   const { id } = req.params;
   const { name, description, salary, contractTypeId, companyId } = req.body;
   try {
@@ -71,7 +71,7 @@ const updateJobOffer = async (req, res) => {
 };
 
 // Delete a job offer
-const deleteJobOffer = async (req, res) => {
+export const deleteJobOffer = async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.jobOffer.delete({ where: { id: Number(id) } });
@@ -80,12 +80,4 @@ const deleteJobOffer = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
-};
-
-module.exports = {
-  getAllJobOffers,
-  getJobOfferById,
-  createJobOffer,
-  updateJobOffer,
-  deleteJobOffer,
 };
