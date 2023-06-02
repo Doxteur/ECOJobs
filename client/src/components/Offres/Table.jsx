@@ -86,7 +86,7 @@ function Table({ filteredOffres, offres,number }) {
                     {offre.salary < 25000 && (
                       <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
                         <span className="h-1.5 w-1.5 rounded-full bg-red-600"></span>
-                        {offre.salary} K
+                        {offre.salary.toString().slice(0, 2)} K
                       </span>
                     )}
                     {offre.salary >= 25000 && offre.salary < 30000 && (

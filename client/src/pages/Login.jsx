@@ -18,10 +18,9 @@ function Login() {
       localStorage.setItem("token", parseRes.token);
       if (parseRes.token) {
         window.location = "/";
-      }else{
+      } else {
         setError(parseRes);
       }
-
     } catch (err) {
       setError(err);
     }
@@ -45,7 +44,6 @@ function Login() {
             <div className="text-center mb-10">
               <h1 className="font-bold text-3xl text-gray-900">Connexion</h1>
               <p>Veuillez vous connecter</p>
-
             </div>
             <div>
               <div className="flex -mx-3">
@@ -91,9 +89,19 @@ function Login() {
                     Connexion
                   </div>
                   <div className="w-full p-2 text-right">
-                  <span className="text-red-500 w-full">{error && error.error}</span>
+                    <span className="text-red-500 w-full">
+                      {error && error.error}
+                    </span>
                   </div>
 
+                  <button className="text-right m-auto">
+                    <a
+                      href="/register"
+                      className="text-green-500 hover:text-green-700"
+                    >
+                      Créer un compte
+                    </a>
+                  </button>
                 </div>
               </div>
             </div>
