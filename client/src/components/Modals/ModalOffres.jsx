@@ -14,7 +14,7 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 
-function ModalOffres({ modalIsOpen, setIsOpen }) {
+function ModalOffres({ modalIsOpen, setIsOpen, offreChoisie }) {
   function closeModal() {
     setIsOpen(false);
   }
@@ -28,12 +28,22 @@ function ModalOffres({ modalIsOpen, setIsOpen }) {
     >
       <div className="text-center">
         <img
-          class="h-36 w-36 m-auto rounded-full ring-2 ring-white dark:ring-gray-800"
-          src="https://as1.ftcdn.net/v2/jpg/05/53/13/28/1000_F_553132886_MztOf4OfUvaaYObFLBvknRdFv38ytfKU.jpg"
+          className="h-36 w-36 m-auto rounded-full ring-2 ring-white dark:ring-gray-800"
+          src={offreChoisie.company.image}
           alt="Description"
         />
+        {offreChoisie.company.values.map((value) => (
+          <span className="inline-flex mt-4 items-center gap-1 rounded-full bg-orange-100 px-2 py-1 text-xs font-bold text-black mx-2" 
+          key={value.id}
+          >
+            {value.name}
+          </span>
+        ))}
+
         <div className="flex align-middle items-center justify-center m-3">
-          <h1 className="text-2xl font-bold">Upcycle</h1>
+          {/* <h1>{offreChoisie.company.values}</h1> */}
+
+          <h1 className="text-2xl font-bold">{offreChoisie.company.name}</h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 text-yellow-500"
@@ -50,22 +60,15 @@ function ModalOffres({ modalIsOpen, setIsOpen }) {
         </div>
         <p className="text-gray-500 w-2/5 m-auto text-left">
           <span className="font-bold">Votre Job :</span> <br />
-          Vous organisez des voyages de rêve individuels pour nos clients et
-          permettez à nos clients de vivre des expériences de voyage
-          inoubliables Vous êtes responsable de la qualification des demandes
-          des clients et de la vente de voyages, cela passe par la collecte des
-          besoins, la planification d'un voyage sur mesure jusqu'à la conclusion
-          de la vente Nos propres outils vous accompagnent dans la planification
-          et la réservation de voyages Vous relevez des objectifs de vente
-          mensuels ambitieux{" "}
+          {offreChoisie.description}
         </p>
         {/* Salaire */}
         <div className="flex justify-center items-center p-2">
           <span className="inline-flex items-center gap-1 rounded-full bg-orange-100 px-2 py-1 text-xs font-bold text-black mx-2">
-            CDD
+            {offreChoisie.contractType.name}
           </span>
           <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-            20k - 25k
+            {offreChoisie.salary}
             <AiFillDollarCircle className="align-middle items-center" />
           </span>
         </div>

@@ -1,29 +1,24 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
+import { NavLink } from "react-router-dom";
 
-function Login() {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
     try {
       const body = { email, password };
-      const response = await fetch("http://localhost:4001/api/auth/login", {
+      const response = await fetch("http://localhost:4001/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       const parseRes = await response.json();
       localStorage.setItem("token", parseRes.token);
-      if (parseRes.token) {
-        window.location = "/";
-      }else{
-        setError(parseRes);
-      }
-
+      window.location = "/";
     } catch (err) {
-      setError(err);
+      console.error(err.message);
     }
   };
 
@@ -33,19 +28,11 @@ function Login() {
         className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden"
         style={{ width: 1000 }}
       >
-        <div className="md:flex w-full">
-          <div className="hidden md:block w-1/2 bg-green-500 py-10 px-10">
-            <img
-              src={require("../assets/images/Logo.png")}
-              alt="login"
-              className="w-full"
-            />
-          </div>
-          <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
+        <div className="md:flex w-full ">
+          <div className="w-full md:w-1/2 py-10 px-5 md:px-10 m-auto">
             <div className="text-center mb-10">
-              <h1 className="font-bold text-3xl text-gray-900">Connexion</h1>
-              <p>Veuillez vous connecter</p>
-
+              <h1 className="font-bold text-3xl text-gray-900">Inscription</h1>
+              <p>Veuillez vous inscrire</p>
             </div>
             <div>
               <div className="flex -mx-3">
@@ -84,16 +71,22 @@ function Login() {
               </div>
               <div className="flex -mx-3">
                 <div className="w-full px-3 mb-5">
-                  <div
-                    className="block w-full max-w-xs mx-auto bg-green-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold text-center cursor-pointer"
+                  <button
+                    className="block w-full max-w-xs mx-auto bg-green-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold text-center"
                     onClick={(e) => submit(e)}
                   >
-                    Connexion
-                  </div>
-                  <div className="w-full p-2 text-right">
-                  <span className="text-red-500 w-full">{error && error.error}</span>
-                  </div>
+                    Créer un compte !
+                  </button>
 
+                  <span className="text-right text-xs text-gray-400">
+                    Vous avez déjà un compte ?
+                    <NavLink
+                      to="/login"
+                      className="text-green-500 hover:text-green-700"
+                    >
+                      Se connecter
+                    </NavLink>
+                  </span>
                 </div>
               </div>
             </div>
@@ -104,4 +97,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

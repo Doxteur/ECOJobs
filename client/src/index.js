@@ -5,11 +5,11 @@ import { store } from "./app/store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { BrowserRouter, Routes,Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MesOffres from "./components/MesOffres/MesOffres";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
-
+import Register from "./pages/Register";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -19,11 +19,11 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App/>} />
-          <Route path="/myoffer" element={<MesOffres/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/login" element={<Login/>} />
-          
+          <Route path="/" element={<App />} />
+          <Route path="/myoffer" element={<MesOffres />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </Provider>

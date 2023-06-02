@@ -4,8 +4,20 @@ const prisma = new PrismaClient();
 // Get all job offers
 export const getAllJobOffers = async (req, res) => {
   try {
-    const jobOffers = await prisma.jobOffer.findMany();
-    res.json(jobOffers);
+    const jobOffers = await prisma.jobOffer.findMany(
+      {
+        include: {
+          contractType: true,
+          company: true,
+           company: {
+            include: {
+              values: true,
+            },
+          },
+        },
+      },
+    );
+    return jobOffers;
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -18,7 +30,7 @@ export const getJobOfferById = async (req, res) => {
   try {
     const jobOffer = await prisma.jobOffer.findUnique({ where: { id: Number(id) } });
     if (jobOffer) {
-      res.json(jobOffer);
+      return jobOffer;
     } else {
       res.status(404).json({ error: "Job offer not found" });
     }
@@ -41,7 +53,7 @@ export const createJobOffer = async (req, res) => {
         companyId,
       },
     });
-    res.json(jobOffer);
+    return jobOffer;
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -63,7 +75,7 @@ export const updateJobOffer = async (req, res) => {
         companyId,
       },
     });
-    res.json(jobOffer);
+    return jobOffer;
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -75,7 +87,7 @@ export const deleteJobOffer = async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.jobOffer.delete({ where: { id: Number(id) } });
-    res.sendStatus(204);
+    return { message: "Job offer deleted successfully" };
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

@@ -8,10 +8,9 @@ const prisma = new PrismaClient();
 
 export default router()
   .post("/login", async (req, res) => {
-    console.log("req.body", req.body);
     try {
       if (!req.body?.email || !req.body?.password) {
-        return res.status(400).json({ message: "Missing email or password" });
+        return res.status(400).json({ error: "Missing email or password" });
       }
       const user = await prisma.user.findUnique({
         where: {
@@ -33,7 +32,7 @@ export default router()
       });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   })
   .post("/register", async (req, res) => {
@@ -53,6 +52,7 @@ export default router()
         data: {
           email: req.body.email,
           password: bcrypt.hashSync(req.body.password, 8),
+          roleId: 1,
         },
       });
       const token = signToken(newUser);
